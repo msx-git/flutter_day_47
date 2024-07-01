@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_day_47/controllers/auth_controller.dart';
-import 'package:flutter_day_47/utils/app_routes.dart';
 import 'package:flutter_day_47/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
+import '../../controllers/auth_controller.dart';
+import '../../utils/app_routes.dart';
+import '../../utils/show_loader.dart';
 import '../widgets/app_textformfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,11 +22,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
   submit() async {
     if (formKey.currentState!.validate()) {
+      Messages.showLoadingDialog(context);
       await context.read<AuthController>().login(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
           );
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
   }
 
   @override
@@ -72,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, AppRoutes.register);
+                  Navigator.pushNamed(context, AppRoutes.register);
                 },
                 child: const Text("Register"),
               )

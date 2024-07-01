@@ -3,7 +3,6 @@ import 'package:flutter_day_47/utils/extensions.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/auth_controller.dart';
-import '../../utils/app_routes.dart';
 import '../widgets/app_textformfield.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -33,9 +32,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
           emailController.clear();
           passwordController.clear();
           passwordConfirmController.clear();
+          Navigator.pop(context);
         },
       );
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    passwordConfirmController.dispose();
+    super.dispose();
   }
 
   @override
@@ -97,7 +105,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, AppRoutes.login);
+                  Navigator.pop(context);
                 },
                 child: const Text("Login"),
               )
